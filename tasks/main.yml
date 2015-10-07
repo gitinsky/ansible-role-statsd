@@ -6,7 +6,10 @@
 
 - name: configure statsd
   template: src=config.js dest=/opt/statsd/config.js
-  notify: reload eye configs
+  notify:
+      - reload eye configs
+      - eye restart statsd
+  tags: statsdconf
 
 - name: put statsd service descriptor
   template: src=statsd-eye.rb dest=/etc/eye/statsd.rb owner=root group=root mode=0644

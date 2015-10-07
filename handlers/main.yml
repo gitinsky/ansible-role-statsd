@@ -1,0 +1,5 @@
+---
+- name: eye restart statsd
+  command: bash -c "source /usr/local/rvm/scripts/rvm && eye restart statsd"
+  sudo: yes
+  sudo_user: "{{ eye_user }}"
