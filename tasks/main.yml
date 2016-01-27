@@ -1,7 +1,17 @@
+- name: install dependencies
+  apt: name={{ item }} update_cache=yes cache_valid_time=86400
+  with_items:
+      - python-httplib2
+
 - name: get statsd
   unarchive: src=https://github.com/bitly/statsdaemon/releases/download/v0.7.1/statsdaemon-0.7.1.linux-amd64.go1.5.1.tar.gz
-             dest=/usr/local/bin copy=no creates=/usr/local/bin/statsdaemon
+             dest=/usr/local/bin copy=no creates=/usr/local/bin/statsdaemon list_files=yes
+  ignore_errors: true
   register: result
+
+- name: if direct download with unarchive failed fall back
+  include: fallback.yml
+  when: result|failed
 
 - name: move statsdaemon-0.7.1.linux-amd64.go1.5.1/statsdaemon to /usr/local/bin
   shell: mv -v /usr/local/bin/statsdaemon-0.7.1.linux-amd64.go1.5.1/statsdaemon /usr/local/bin/statsdaemon

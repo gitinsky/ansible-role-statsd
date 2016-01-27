@@ -1,0 +1,11 @@
+- name: download statsd
+  get_url: url=https://github.com/bitly/statsdaemon/releases/download/v0.7.1/statsdaemon-0.7.1.linux-amd64.go1.5.1.tar.gz
+             dest=statsdaemon-0.7.1.linux-amd64.go1.5.1.tar.gz
+
+- name: unarchive statsd
+  unarchive: src=~/statsdaemon-0.7.1.linux-amd64.go1.5.1.tar.gz
+             dest=/usr/local/bin copy=no
+  register: result
+
+- name: remove archive
+  file: dest=~/statsdaemon-0.7.1.linux-amd64.go1.5.1.tar.gz state=absent
