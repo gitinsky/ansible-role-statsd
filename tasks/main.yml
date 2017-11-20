@@ -10,7 +10,7 @@
   register: result
 
 - name: if direct download with unarchive failed fall back
-  include: fallback.yml
+  include_tasks: fallback.yml
   when: result|failed
 
 - name: move statsdaemon-0.7.1.linux-amd64.go1.5.1/statsdaemon to /usr/local/bin
