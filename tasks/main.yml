@@ -20,11 +20,12 @@
 - name: remove /usr/local/bin/statsdaemon-0.7.1.linux-amd64.go1.5.1
   file: dest=/usr/local/bin/statsdaemon-0.7.1.linux-amd64.go1.5.1 state=absent
 
-- name: put statsd service descriptor
-  template: src=statsd-eye.rb dest=/etc/eye/statsd.rb owner=root group=root mode=0644
-  notify:
-      - reload eye configs
-      - eye restart statsd
+- name: create statsd user
+  user: name=statsd
 
-- name: load config in eye and restart statsd
-  meta: flush_handlers
+- name: put systemd unit file
+  template: src=statsd.service dest=/etc/systemd/system/statsd.service backup=yes
+  notify: systemctl daemon-reload
+
+- name: enable statsd service
+  service: name=statsd state=started enabled=yes

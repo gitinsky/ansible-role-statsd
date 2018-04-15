@@ -1,3 +1,6 @@
 ---
 - name: eye restart statsd
   command: bash -c "source /usr/local/rvm/scripts/rvm && eye restart statsd"
+
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
