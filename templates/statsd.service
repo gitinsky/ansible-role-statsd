@@ -1,0 +1,14 @@
+[Unit]
+Description=StatsD service
+
+[Service]
+LimitNOFILE=65535
+Type=simple
+User=statsd
+Group=statsd
+Restart=always
+RestartSec=20
+ExecStart=/usr/local/bin/statsdaemon -address=":{{ statsd_port }}" -graphite="{{ graphite_host }}:{{ graphite_port }}"
+
+[Install]
+WantedBy=multi-user.target
